@@ -10,32 +10,29 @@ import java.util.UUID;
 
 public class Estimate {
 
-    // Company Information
-    private String companyName;
-    private String companyAddress;
-
-    // Customer Information
-    private String customerName;
-    private String customerAddress;
-
     private LocalDate date;
     private UUID estimateId;
     private String estimateDescription;
     private EstimateTable estimateTable;
+    // Company Information
+    private String companyName;
+    private String companyAddress;
+    // Customer Information
+    private String customerName;
+    private String customerAddress;
 
     public Estimate() {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Estimate(String companyName, String companyAddress, String customerName,
-                    String customerAddress, UUID estimateId,
-                    String estimateDescription, EstimateTable estimateTable) {
+    public Estimate(String estimateDescription, String companyName, String companyAddress,
+                    String customerName, String customerAddress, EstimateTable estimateTable) {
         this.companyName = companyName;
         this.companyAddress = companyAddress;
         this.customerName = customerName;
         this.customerAddress = customerAddress;
         this.date = LocalDate.now();
-        this.estimateId = estimateId;
+        this.estimateId = UUID.randomUUID();
         this.estimateDescription = estimateDescription;
         this.estimateTable = estimateTable;
     }
