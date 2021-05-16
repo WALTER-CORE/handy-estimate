@@ -26,14 +26,15 @@ public class Estimate {
     public Estimate() {
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Estimate(String companyName, String companyAddress, String customerName,
-                    String customerAddress, LocalDate date, UUID estimateId,
+                    String customerAddress, UUID estimateId,
                     String estimateDescription, EstimateTable estimateTable) {
         this.companyName = companyName;
         this.companyAddress = companyAddress;
         this.customerName = customerName;
         this.customerAddress = customerAddress;
-        this.date = date;
+        this.date = LocalDate.now();
         this.estimateId = estimateId;
         this.estimateDescription = estimateDescription;
         this.estimateTable = estimateTable;
@@ -85,6 +86,22 @@ public class Estimate {
 
     public void setEstimateId(UUID estimateId) {
         this.estimateId = estimateId;
+    }
+
+    public String getEstimateDescription() {
+        return estimateDescription;
+    }
+
+    public void setEstimateDescription(String estimateDescription) {
+        this.estimateDescription = estimateDescription;
+    }
+
+    public EstimateTable getEstimateTable() {
+        return estimateTable;
+    }
+
+    public void setEstimateTable(EstimateTable estimateTable) {
+        this.estimateTable = estimateTable;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
