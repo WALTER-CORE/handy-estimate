@@ -49,8 +49,8 @@ public class FileHandlerUtilsTest {
         String customerAddress = "[COMPANY ADDRESS] 5678 Customer Way, Seattle WA 22222";
         EstimateTable estimateTable = new EstimateTable(
                 Arrays.asList(
-                        new EstimateLineItem("item 1", 1, BigDecimal.TEN),
-                        new EstimateLineItem("item 2", 2, BigDecimal.valueOf(20))
+                        new EstimateLineItem("Item 1", 1, BigDecimal.TEN),
+                        new EstimateLineItem("Item 2", 2, BigDecimal.valueOf(20))
                 )
         );
         Estimate estimate = new Estimate(estimateDescription, companyName, companyAddress, customerName,
