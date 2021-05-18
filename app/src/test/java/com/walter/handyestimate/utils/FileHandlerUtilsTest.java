@@ -1,15 +1,19 @@
 package com.walter.handyestimate.utils;
 
 import com.walter.handyestimate.data.model.Estimate;
+import com.walter.handyestimate.data.model.EstimateLineItem;
+import com.walter.handyestimate.data.model.EstimateTable;
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -34,7 +38,7 @@ public class FileHandlerUtilsTest {
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void testWriteToFile() throws IOException {
+    public void testWriteEstimateToFile() throws IOException {
         // TODO change this path to the temporary directory.
         String path = folder.newFolder("/estimateTestOutput").getAbsolutePath();
         path = "C:/Users/Brian Jhong/desktop/temp/estimateTestWordFile";
@@ -43,8 +47,14 @@ public class FileHandlerUtilsTest {
         String companyAddress = "[COMPANY ADDRESS] 1234 Sesame Street, Seattle WA 11111";
         String customerName = "[CUSTOMER NAME] Customer Name";
         String customerAddress = "[COMPANY ADDRESS] 5678 Customer Way, Seattle WA 22222";
+        EstimateTable estimateTable = new EstimateTable(
+                Arrays.asList(
+                        new EstimateLineItem("item 1", 1, BigDecimal.TEN),
+                        new EstimateLineItem("item 2", 2, BigDecimal.valueOf(20))
+                )
+        );
         Estimate estimate = new Estimate(estimateDescription, companyName, companyAddress, customerName,
-                customerAddress, null);
+                customerAddress, estimateTable);
 
         writeEstimateToFile(estimate, path);
         XWPFDocument document = new XWPFDocument(Files.newInputStream(Paths.get(path)));
@@ -53,6 +63,7 @@ public class FileHandlerUtilsTest {
         assertNotNull(document);
 
         List<XWPFParagraph> paragraphs = document.getParagraphs();
+        List<XWPFTable> tables = document.getTables();
         document.close();
 
         // Assert paragraphs exists.
@@ -74,6 +85,14 @@ public class FileHandlerUtilsTest {
                 Arrays.asList(estimateDescription, companyName, companyAddress, customerName, customerAddress),
                 estimate
         );
+
+        // Assert table exists.
+        assertNotNull(tables);
+        assertEquals(1, tables.size());
+
+        // Assert estimate table content.
+        XWPFTable estimateDocumentTable = tables.get(0);
+
     }
 
     private void assertParagraphOutput(List<XWPFParagraph> paragraphs, List<String> expectedParagraphText, Estimate estimate) {

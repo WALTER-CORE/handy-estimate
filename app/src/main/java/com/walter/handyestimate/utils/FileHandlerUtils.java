@@ -1,15 +1,19 @@
 package com.walter.handyestimate.utils;
 
 import com.walter.handyestimate.data.model.Estimate;
+import com.walter.handyestimate.data.model.EstimateLineItem;
 import com.walter.handyestimate.data.model.EstimateTable;
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -113,6 +117,23 @@ public class FileHandlerUtils {
     }
 
     // TODO: Implement this
-    private static void writeEstimateTable(XWPFDocument document, EstimateTable table) {
+    private static void writeEstimateTable(XWPFDocument document, EstimateTable estimateTable) {
+        XWPFTable table = document.createTable();
+
+        //Creating first Row with labels
+        XWPFTableRow labelsRow = table.getRow(0);
+        labelsRow.getCell(0).setText("Description");
+        labelsRow.addNewTableCell().setText("Quantity");
+        labelsRow.addNewTableCell().setText("Rate");
+        labelsRow.addNewTableCell().setText("Cost");
+
+        List<EstimateLineItem> estimateLineItemList = estimateTable.getEstimateLineItemList();
+        for (EstimateLineItem estimateLineItem : estimateLineItemList) {
+            XWPFTableRow row = table.createRow();
+            row.getCell(0).setText(estimateLineItem.getDescription());
+            row.getCell(1).setText(String.valueOf(estimateLineItem.getQuantity()));
+            row.getCell(2).setText(estimateLineItem.getRate().toString());
+            row.getCell(3).setText(estimateLineItem.getCost().toString());
+        }
     }
 }
