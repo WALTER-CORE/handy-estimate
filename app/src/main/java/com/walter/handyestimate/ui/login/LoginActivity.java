@@ -21,6 +21,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.walter.handyestimate.data.model.TestModel;
+
 
 import com.walter.handyestimate.R;
 
@@ -32,14 +34,21 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        final String companyName = ;
 
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+
+
+            @Override
+            public void onChanged() {
+                    updateUiWithUser(LoggedInUserView());
+
+
+            }
         }
-
-
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override

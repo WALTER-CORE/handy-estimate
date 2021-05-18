@@ -17,7 +17,5 @@ public class LoginViewModel extends ViewModel {
     public void login(String companyName) {
         // can be launched in a separate asynchronous job
 
-
-
     }
 }
