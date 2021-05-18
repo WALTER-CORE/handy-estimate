@@ -35,6 +35,7 @@ public class FileHandlerUtilsTest {
 
     @Test
     public void testWriteToFile() throws IOException {
+        // TODO change this path to the temporary directory.
         String path = folder.newFolder("/estimateTestOutput").getAbsolutePath();
         path = "C:/Users/Brian Jhong/desktop/temp/estimateTestWordFile";
         String estimateDescription = "[ESTIMATE DESCRIPTION] Estimate for fence repair";
@@ -75,16 +76,13 @@ public class FileHandlerUtilsTest {
         );
     }
 
-    // TODO: Check the section spacing.
     private void assertParagraphOutput(List<XWPFParagraph> paragraphs, List<String> expectedParagraphText, Estimate estimate) {
         for (int i = 0; i < paragraphs.size(); i++) {
             XWPFParagraph paragraph = paragraphs.get(i);
             XWPFRun run = paragraph.getRuns().get(0);
 
             if (paragraph.getText().contains("Estimate ID: ")) {
-                assertEquals("Estimate ID: " + estimate.getEstimateId(), paragraph.getText());
-            } else if (paragraph.getText().contains("Date: ")) {
-                assertEquals("Date: " + estimate.getDate(), paragraph.getText());
+                assertEquals("Estimate ID: " + estimate.getEstimateId() + "\nDate: " + estimate.getDate(), paragraph.getText());
             } else if (paragraph.getText().contains("[COMPANY NAME]")) {
                 assertEquals("From: " + "\n" + estimate.getCompanyName() + "\n" + estimate.getCompanyAddress(),
                         paragraph.getText());

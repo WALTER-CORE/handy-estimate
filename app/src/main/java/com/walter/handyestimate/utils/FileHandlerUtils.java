@@ -20,7 +20,7 @@ public class FileHandlerUtils {
     public static final int HEADING_FONT_SIZE = 20;
     public static final int HEADING_SPACING_AFTER = 500;
     public static final int PARAGRAPH_FONT_SIZE = 12;
-    public static final int DEFAULT_SPACING_AFTER = 2;
+    public static final int DEFAULT_SPACING_AFTER = 500;
 
     /**
      * Take a map of strings and format them on a file to print them
@@ -66,11 +66,10 @@ public class FileHandlerUtils {
     }
 
     private static void writeEstimateMiscDetails(XWPFDocument document, UUID estimateId, LocalDate date) {
-        XWPFRun estimateIdRun = getParagraphRun(document);
-        estimateIdRun.setText("Estimate ID: " + estimateId);
-
-        XWPFRun dateRun = getParagraphRun(document);
-        dateRun.setText("Date: " + date.toString());
+        XWPFRun miscDetailsRun = getParagraphRun(document);
+        miscDetailsRun.setText("Estimate ID: " + estimateId);
+        miscDetailsRun.addBreak();
+        miscDetailsRun.setText("Date: " + date.toString());
     }
 
     private static void writeCompanyDetails(XWPFDocument document, String name, String address) {
@@ -91,7 +90,6 @@ public class FileHandlerUtils {
         run.addBreak();
         run.setText(address);
     }
-
 
     private static XWPFRun getHeaderRun(XWPFDocument document) {
         XWPFRun run = getSpacedParagraph(document, HEADING_SPACING_AFTER).createRun();
