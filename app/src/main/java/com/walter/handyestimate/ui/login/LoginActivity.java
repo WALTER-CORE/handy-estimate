@@ -2,70 +2,51 @@ package com.walter.handyestimate.ui.login;
 
 import android.os.Bundle;
 
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.walter.handyestimate.R;
+import com.walter.handyestimate.data.model.Estimate;
+import com.walter.handyestimate.data.model.EstimateTable;
+
 
 public class LoginActivity extends AppCompatActivity {
+
+    private String companyName;
+    private String companyAddress;
+    private String customerName;
+    private String customerAddress;
+    private String estimateDescription;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final EditText usernameEditText = findViewById(R.id.company_name);
-        final EditText passwordEditText = findViewById(R.id.company_address);
-        final Button loginButton = findViewById(R.id.login);
-        final ProgressBar loadingProgressBar = findViewById(R.id.loading);
-        }
+        Estimate estimate;
+        EstimateTable estimateTable;
 
+        final EditText companyNameEditText = findViewById(R.id.company_name);
+        final EditText companyAddressEditText = findViewById(R.id.company_address);
+        final EditText customerNameEditText = findViewById(R.id.customer_name);
+        final EditText customerAddressEditText = findViewById(R.id.customer_address);
+        final EditText estimateDescriptionEditText = findViewById(R.id.estimate_description);
+        final Button submitButton = findViewById(R.id.submit);
 
-
-        TextWatcher afterTextChangedListener = new TextWatcher() {
+        submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // ignore
-            }
+            public void onClick(View view) {
+                companyName = companyNameEditText.getText().toString();
+                companyAddress = companyAddressEditText.getText().toString();
+                customerName = customerNameEditText.getText().toString();
+                customerAddress = customerAddressEditText.getText().toString();
+                estimateDescription = estimateDescriptionEditText.getText().toString();
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // ignore
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                loginViewModel.loginDataChanged(usernameEditText.getText().toString());
-            }
-        };
-        usernameEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(usernameEditText.getText().toString());
-                }
-                return false;
-            }
-        });
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString());
             }
         });
     }
