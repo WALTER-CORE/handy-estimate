@@ -22,14 +22,15 @@ public class LoginActivity extends AppCompatActivity {
     private String customerAddress;
     private String estimateDescription;
 
+   private Estimate estimate;
+   private EstimateTable estimateTable;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Estimate estimate;
-        EstimateTable estimateTable;
+
 
         final EditText companyNameEditText = findViewById(R.id.company_name);
         final EditText companyAddressEditText = findViewById(R.id.company_address);
@@ -46,6 +47,9 @@ public class LoginActivity extends AppCompatActivity {
                 customerName = customerNameEditText.getText().toString();
                 customerAddress = customerAddressEditText.getText().toString();
                 estimateDescription = estimateDescriptionEditText.getText().toString();
+
+                //TODO: Construct new EstimateTable and use strings received to create the Estimate item. 
+
 
             }
         });
