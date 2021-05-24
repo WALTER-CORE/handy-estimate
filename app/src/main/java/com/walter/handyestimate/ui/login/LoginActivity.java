@@ -39,19 +39,16 @@ public class LoginActivity extends AppCompatActivity {
         final EditText estimateDescriptionEditText = findViewById(R.id.estimate_description);
         final Button submitButton = findViewById(R.id.submit);
 
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                companyName = companyNameEditText.getText().toString();
-                companyAddress = companyAddressEditText.getText().toString();
-                customerName = customerNameEditText.getText().toString();
-                customerAddress = customerAddressEditText.getText().toString();
-                estimateDescription = estimateDescriptionEditText.getText().toString();
+        submitButton.setOnClickListener(view -> {
+            companyName = companyNameEditText.getText().toString();
+            companyAddress = companyAddressEditText.getText().toString();
+            customerName = customerNameEditText.getText().toString();
+            customerAddress = customerAddressEditText.getText().toString();
+            estimateDescription = estimateDescriptionEditText.getText().toString();
 
-                //TODO: Construct new EstimateTable and use strings received to create the Estimate item. 
+            //TODO: Construct new EstimateTable and use strings received to create the Estimate item.
 
 
-            }
         });
     }
 
