@@ -9,11 +9,9 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-    <string name="prompt_company_name" />
-    <string name="prompt_company_address" />
-    <string name="prompt_estimate_description" />
-    <string name="action_estimate_description" />
-    <string name="prompt_customer_address" />
-    <string name="customer_name" />
-    <string name="prompt_customer_name" />
+    <string name="customer_name" >Customer Name</string>
+    <string name="company_name">Company Name</string>
+    <string name="company_address">Company Address</string>
+    <string name="estimate_description">Estimate Description</string>
+    <string name="customer_address">Customer Address</string>
 </resources>
