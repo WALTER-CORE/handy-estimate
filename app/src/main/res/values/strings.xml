@@ -14,4 +14,6 @@
     <string name="company_address">Company Address</string>
     <string name="estimate_description">Estimate Description</string>
     <string name="customer_address">Customer Address</string>
+    <string name="item">Item</string>
+    <string name="item_description">Description</string>
 </resources>
