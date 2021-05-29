@@ -91,7 +91,10 @@ public class LoginActivity extends AppCompatActivity {
 
 
             estimate = new Estimate(estimateDescription, companyName, companyAddress, customerName, customerAddress, new EstimateTable(lineItemList));
-
+            if (estimate.isSuccess()) {
+                lineQuantity = 99;
+                quantity.setText("" + lineQuantity);
+            }
 
         });
     }
