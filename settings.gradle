@@ -1,2 +1,3 @@
+include ':BrotherPrintLibrary'
 include ':app'
 rootProject.name = "handyestimate"
