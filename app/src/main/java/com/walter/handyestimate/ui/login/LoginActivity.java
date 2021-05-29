@@ -88,14 +88,7 @@ public class LoginActivity extends AppCompatActivity {
             estimateDescription = estimateDescriptionEditText.getText().toString();
 
             //TODO: Construct new EstimateTable and use strings received to create the Estimate item.
-
-
             estimate = new Estimate(estimateDescription, companyName, companyAddress, customerName, customerAddress, new EstimateTable(lineItemList));
-            if (estimate.isSuccess()) {
-                lineQuantity = 99;
-                quantity.setText("" + lineQuantity);
-            }
-
         });
     }
 
