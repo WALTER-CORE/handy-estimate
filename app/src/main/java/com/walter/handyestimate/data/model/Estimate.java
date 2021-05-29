@@ -20,7 +20,6 @@ public class Estimate {
     // Customer Information
     private String customerName;
     private String customerAddress;
-    public boolean success;
 
     public Estimate() {
     }
@@ -36,11 +35,6 @@ public class Estimate {
         this.estimateId = UUID.randomUUID();
         this.estimateDescription = estimateDescription;
         this.estimateTable = estimateTable;
-        success = true;
-    }
-
-    public boolean isSuccess() {
-        return success;
     }
 
     public String getCompanyName() {

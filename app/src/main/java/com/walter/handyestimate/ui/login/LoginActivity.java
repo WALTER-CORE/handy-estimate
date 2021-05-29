@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         final Button plusQuantityButton = findViewById(R.id.plus_quantity);
         final Button minusQuantityButton = findViewById(R.id.minus_quantity);
         final Button addItemButton = findViewById(R.id.add_item);
-        final TextView quantity = findViewById(R.id.quantity);
+        TextView quantity = findViewById(R.id.quantity);
 
         plusQuantityButton.setOnClickListener(view -> {
             lineQuantity++;
