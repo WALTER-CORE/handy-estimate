@@ -108,6 +108,9 @@ public class FileHandlerUtilsTest {
             } else if (paragraph.getText().contains("[CUSTOMER NAME]")) {
                 assertEquals("To: " + "\n" + estimate.getCustomerName() + "\n" + estimate.getCustomerAddress(),
                         paragraph.getText());
+            } else if (paragraph.getText().contains("Total Cost: $")) {
+                String expectedTotalCostString = "\nTotal Cost: $" + estimate.getEstimateTable().getTotalCost().toPlainString();
+                assertEquals(expectedTotalCostString, paragraph.getText());
             } else {
                 assertEquals(expectedParagraphText.get(i), paragraph.getText());
                 assertEquals(DEFAULT_SPACING_AFTER, paragraph.getSpacingAfter());

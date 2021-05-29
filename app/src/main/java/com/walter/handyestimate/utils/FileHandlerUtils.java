@@ -54,6 +54,13 @@ public class FileHandlerUtils {
             writeCompanyDetails(document, estimate.getCompanyName(), estimate.getCompanyAddress());
             writeCustomerDetails(document, estimate.getCustomerName(), estimate.getCustomerAddress());
             writeEstimateTable(document, estimate.getEstimateTable());
+            // Write the total cost under teh table.
+            XWPFParagraph totalParagraph = getSpacedParagraph(document, DEFAULT_SPACING_AFTER);
+            totalParagraph.setAlignment(ParagraphAlignment.RIGHT);
+            XWPFRun totalRun = getParagraphRun(totalParagraph);
+            totalRun.addBreak();
+            totalRun.setBold(true);
+            totalRun.setText("Total Cost: $" + estimate.getEstimateTable().getTotalCost().toPlainString());
 
             // TODO: Add default section spacing.
 
@@ -116,6 +123,12 @@ public class FileHandlerUtils {
 
         return run;
     }
+    private static XWPFRun getParagraphRun(XWPFParagraph paragraph) {
+        XWPFRun run = paragraph.createRun();
+        run.setFontSize(PARAGRAPH_FONT_SIZE);
+
+        return run;
+    }
 
     private static XWPFParagraph getSpacedParagraph(XWPFDocument document, int spacing) {
         XWPFParagraph paragraph = document.createParagraph();
@@ -143,10 +156,6 @@ public class FileHandlerUtils {
             setTableCell(row.getCell(2), "$" + getFormattedBigDecimalCost(estimateLineItem.getRate()), false, false);
             setTableCell(row.getCell(3), "$" + getFormattedBigDecimalCost(estimateLineItem.getCost()), false, false);
         }
-
-        // TODO: Fix Total Run formatting
-        XWPFRun totalRun = getParagraphRun(document);
-        totalRun.setText("Total Cost: $" + estimateTable.getTotalCost().toPlainString());
     }
 
     private static void setTableCell(XWPFTableCell cell, String text , boolean bold , boolean addBreak) {
