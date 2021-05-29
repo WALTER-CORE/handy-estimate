@@ -39,9 +39,7 @@ public class FileHandlerUtilsTest {
 
     @Test
     public void testWriteEstimateToFile() throws IOException {
-        // TODO change this path to the temporary directory.
-        String path = folder.newFolder("/estimateTestOutput").getAbsolutePath();
-        path = "C:/Users/Brian Jhong/desktop/temp/estimateTestWordFile";
+        String path = folder.newFile("estimateTestWordFile").getAbsolutePath();
         String estimateDescription = "[ESTIMATE DESCRIPTION] Estimate for fence repair";
         String companyName = "[COMPANY NAME] Handy Company";
         String companyAddress = "[COMPANY ADDRESS] 1234 Sesame Street, Seattle WA 11111";
