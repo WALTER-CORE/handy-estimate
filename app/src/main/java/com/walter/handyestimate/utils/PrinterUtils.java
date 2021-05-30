@@ -10,14 +10,14 @@ import java.util.logging.Logger;
 
 public class PrinterUtils {
 
-    private static Logger logger = Logger.getLogger(PrinterUtils.class.getName());
+    private static final Logger logger = Logger.getLogger(PrinterUtils.class.getName());
 
     /**
      * Print the given file to the Brother Printer
      *
      * @param filePath file path to write to.
      * */
-    public void print(String filePath) {
+    public static void printFile(String filePath) {
         // Specify printer
         Printer printer = new Printer();
         PrinterInfo settings = printer.getPrinterInfo();
