@@ -1,6 +1,9 @@
 package com.walter.handyestimate.utils;
 
 import android.bluetooth.BluetoothAdapter;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import com.brother.ptouch.sdk.Printer;
 import com.brother.ptouch.sdk.PrinterInfo;
@@ -17,13 +20,14 @@ public class PrinterUtils {
      *
      * @param filePath file path to write to.
      * */
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public static void printFile(String filePath) {
         // Specify printer
         Printer printer = new Printer();
         PrinterInfo settings = printer.getPrinterInfo();
         settings.printerModel = PrinterInfo.Model.PJ_763MFi;
-        settings.port = PrinterInfo.Port.NET;
-        settings.ipAddress = "192.168.1.172";
+//        settings.port = PrinterInfo.Port.NET;
+//        settings.ipAddress = "192.168.1.172";
 
         // Print Settings
         settings.numberOfCopies = 1;
@@ -31,10 +35,10 @@ public class PrinterUtils {
         // For Bluetooth:
         printer.setBluetooth(BluetoothAdapter.getDefaultAdapter());
         settings.port = PrinterInfo.Port.BLUETOOTH;
-        settings.macAddress = "your-printer-bluetooth-address";
-
-        // For USB:
-        settings.port = PrinterInfo.Port.USB;
+        settings.macAddress = ""; // TODO: DON'T COMMIT THIS ADDRESS
+//
+//        // For USB:
+//        settings.port = PrinterInfo.Port.USB;
 
         printer.setPrinterInfo(settings);
 
