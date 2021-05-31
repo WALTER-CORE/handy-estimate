@@ -7,20 +7,23 @@ import android.os.Bundle;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.walter.handyestimate.R;
 import com.walter.handyestimate.data.model.Estimate;
 import com.walter.handyestimate.data.model.EstimateTable;
 import com.walter.handyestimate.data.model.EstimateLineItem;
+import com.walter.handyestimate.utils.FileHandlerUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.io.File.createTempFile;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -33,6 +36,9 @@ public class LoginActivity extends AppCompatActivity {
     private String estimateDescription;
     private String item;
     private String itemDescription;
+
+    private File estimateFile;
+    private FileHandlerUtils fileHandler;
 
     private Estimate estimate;
     private EstimateTable estimateTable;
@@ -89,16 +95,20 @@ public class LoginActivity extends AppCompatActivity {
 
             //TODO: Construct new EstimateTable and use strings received to create the Estimate item.
             estimate = new Estimate(estimateDescription, companyName, companyAddress, customerName, customerAddress, new EstimateTable(lineItemList));
+            print(estimate);
         });
     }
 
-//    private void updateUiWithUser(LoggedInUserView model) {
-//        String welcome = getString(R.string.welcome) + model.getDisplayName();
-//        // TODO : initiate successful logged in experience
-//        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
-//    }
-//
-//    private void showLoginFailed(@StringRes Integer errorString) {
-//        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
-//    }
+    private void print(Estimate estimate) {
+        try {
+            estimateFile = createTempFile("estimateFile", ".doc", this.getCacheDir());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            FileHandlerUtils.writeEstimateToFile(estimate, estimateFile.getPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
