@@ -16,6 +16,7 @@ import com.walter.handyestimate.data.model.Estimate;
 import com.walter.handyestimate.data.model.EstimateTable;
 import com.walter.handyestimate.data.model.EstimateLineItem;
 import com.walter.handyestimate.utils.FileHandlerUtils;
+import com.walter.handyestimate.utils.PrinterUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -95,20 +96,18 @@ public class LoginActivity extends AppCompatActivity {
 
             //TODO: Construct new EstimateTable and use strings received to create the Estimate item.
             estimate = new Estimate(estimateDescription, companyName, companyAddress, customerName, customerAddress, new EstimateTable(lineItemList));
-            print(estimate);
+            try {
+                print(estimate);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
 
-    private void print(Estimate estimate) {
-        try {
-            estimateFile = createTempFile("estimateFile", ".doc", this.getCacheDir());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            FileHandlerUtils.writeEstimateToFile(estimate, estimateFile.getPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void print(Estimate estimate) throws IOException {
+        estimateFile = createTempFile("estimateFile", ".doc", this.getCacheDir());
+        FileHandlerUtils.writeEstimateToFile(estimate, estimateFile.getAbsolutePath());
+        PrinterUtils.printFile(estimateFile.getAbsolutePath());
     }
 }
