@@ -4,6 +4,7 @@ import com.walter.handyestimate.data.model.Estimate;
 import com.walter.handyestimate.data.model.EstimateLineItem;
 import com.walter.handyestimate.data.model.EstimateTable;
 
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -23,7 +24,7 @@ public class PrinterUtilsTest {
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
-//    @Ignore("For manual testing purposes only")
+    @Ignore("For manual testing purposes only")
     @Test
     public void testPrintFile() throws IOException {
         String path = folder.newFile("printTestFile").getAbsolutePath();

@@ -27,7 +27,7 @@ public class PrinterUtils {
         PrinterInfo settings = printer.getPrinterInfo();
         settings.printerModel = PrinterInfo.Model.PJ_763MFi;
 //        settings.port = PrinterInfo.Port.NET;
-//        settings.ipAddress = "192.168.1.172";
+//        settings.ipAddress = "";
 
         // Print Settings
         settings.numberOfCopies = 1;
