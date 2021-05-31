@@ -17,4 +17,5 @@
     <string name="item">Item</string>
     <string name="item_description">Description</string>
     <string name="submit">Submit</string>
+    <string name="add_item">ADD ITEM</string>
 </resources>

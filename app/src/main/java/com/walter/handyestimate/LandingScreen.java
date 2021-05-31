@@ -24,4 +24,6 @@ public class LandingScreen extends AppCompatActivity {
         });
 
     }
+
+
 }
