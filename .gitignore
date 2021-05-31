@@ -16,3 +16,4 @@ local.properties
 app/libs/
 /.settings/org.eclipse.buildship.core.prefs
 /.project
+!/BrotherPrintLibrary/build/
