@@ -1,5 +1,6 @@
 package com.walter.handyestimate.utils;
 
+import com.aspose.words.Document;
 import com.walter.handyestimate.data.model.Estimate;
 import com.walter.handyestimate.data.model.EstimateLineItem;
 import com.walter.handyestimate.data.model.EstimateTable;
@@ -71,6 +72,13 @@ public class FileHandlerUtils {
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Exception when writing to the filepath: " + filePath, e);
         }
+    }
+
+    public static void convertDocxToPdf(String filePath) throws Exception {
+        // Load the Word document from disk
+        Document doc = new Document(filePath);
+        // Save as PDF
+        doc.save(filePath.replace(".docx", ".pdf"));
     }
 
     private static void writeEstimateHeading(XWPFDocument document) {

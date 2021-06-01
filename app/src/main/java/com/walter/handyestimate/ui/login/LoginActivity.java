@@ -3,18 +3,17 @@ package com.walter.handyestimate.ui.login;
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.walter.handyestimate.R;
 import com.walter.handyestimate.data.model.Estimate;
-import com.walter.handyestimate.data.model.EstimateTable;
 import com.walter.handyestimate.data.model.EstimateLineItem;
+import com.walter.handyestimate.data.model.EstimateTable;
 import com.walter.handyestimate.utils.FileHandlerUtils;
 import com.walter.handyestimate.utils.PrinterUtils;
 
@@ -23,8 +22,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.io.File.createTempFile;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -100,14 +97,19 @@ public class LoginActivity extends AppCompatActivity {
                 print(estimate);
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void print(Estimate estimate) throws IOException {
-        estimateFile = createTempFile("estimateFile", ".doc", this.getCacheDir());
+    private void print(Estimate estimate) throws Exception {
+        estimateFile = File.createTempFile("estimateFile", ".docx", this.getCacheDir());
         FileHandlerUtils.writeEstimateToFile(estimate, estimateFile.getAbsolutePath());
-        PrinterUtils.printFile(estimateFile.getAbsolutePath());
+        FileHandlerUtils.convertDocxToPdf(estimateFile.getAbsolutePath());
+        File cachedEstimateFile = new File(this.getCacheDir(), "estimateFile.pdf");
+        PrinterUtils.printFile(cachedEstimateFile.getAbsolutePath());
+        cachedEstimateFile.deleteOnExit();
     }
 }
