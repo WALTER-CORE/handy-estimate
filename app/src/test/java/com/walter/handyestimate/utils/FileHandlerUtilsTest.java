@@ -8,10 +8,12 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
@@ -23,6 +25,7 @@ import static com.walter.handyestimate.utils.FileHandlerUtils.DEFAULT_SPACING_AF
 import static com.walter.handyestimate.utils.FileHandlerUtils.HEADING_FONT_SIZE;
 import static com.walter.handyestimate.utils.FileHandlerUtils.HEADING_SPACING_AFTER;
 import static com.walter.handyestimate.utils.FileHandlerUtils.PARAGRAPH_FONT_SIZE;
+import static com.walter.handyestimate.utils.FileHandlerUtils.convertFileToBitMap;
 import static com.walter.handyestimate.utils.FileHandlerUtils.writeEstimateToFile;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -117,4 +120,52 @@ public class FileHandlerUtilsTest {
         }
     }
 
+//    @Test
+//    public void testConvertDocxToPdf() throws Exception {
+//        String path = File.createTempFile("estimateTestWordFile", ".docx").getAbsolutePath();
+//        path = "C:/Users/jongj/OneDrive/desktop/temp/estimateTestWordFile.docx";
+//        String tempPath = "C:/Users/jongj/OneDrive/desktop/temp/tempFile.docx";
+//        String estimateDescription = "[ESTIMATE DESCRIPTION] Estimate for fence repair";
+//        String companyName = "[COMPANY NAME] Handy Company";
+//        String companyAddress = "[COMPANY ADDRESS] 1234 Sesame Street, Seattle WA 11111";
+//        String customerName = "[CUSTOMER NAME] Customer Name";
+//        String customerAddress = "[COMPANY ADDRESS] 5678 Customer Way, Seattle WA 22222";
+//        EstimateTable estimateTable = new EstimateTable(
+//                Arrays.asList(
+//                        new EstimateLineItem("Item 1", 1, BigDecimal.TEN),
+//                        new EstimateLineItem("Item 2", 2, BigDecimal.valueOf(20))
+//                )
+//        );
+//        Estimate estimate = new Estimate(estimateDescription, companyName, companyAddress, customerName,
+//                customerAddress, estimateTable);
+//
+//        writeEstimateToFile(estimate, path);
+//        convertDocxToPdf(path, tempPath);
+//
+//        assertTrue(new File(path.replace(".docx", ".pdf")).exists());
+//    }
+
+    @Ignore
+    @Test
+    public void testConvertDocxToBitmap() throws Exception {
+        String path = File.createTempFile("estimateTestWordFile", ".docx").getAbsolutePath();
+        path = "C:/Users/jongj/OneDrive/desktop/temp/estimateTestWordFile.docx";
+        String estimateDescription = "[ESTIMATE DESCRIPTION] Estimate for fence repair";
+        String companyName = "[COMPANY NAME] Handy Company";
+        String companyAddress = "[COMPANY ADDRESS] 1234 Sesame Street, Seattle WA 11111";
+        String customerName = "[CUSTOMER NAME] Customer Name";
+        String customerAddress = "[COMPANY ADDRESS] 5678 Customer Way, Seattle WA 22222";
+        EstimateTable estimateTable = new EstimateTable(
+                Arrays.asList(
+                        new EstimateLineItem("Item 1", 1, BigDecimal.TEN),
+                        new EstimateLineItem("Item 2", 2, BigDecimal.valueOf(20))
+                )
+        );
+        Estimate estimate = new Estimate(estimateDescription, companyName, companyAddress, customerName,
+                customerAddress, estimateTable);
+
+        writeEstimateToFile(estimate, path);
+
+        assertNotNull(convertFileToBitMap(path));
+    }
 }

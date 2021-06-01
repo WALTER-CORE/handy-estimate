@@ -1,6 +1,8 @@
 package com.walter.handyestimate.ui.login;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
@@ -16,6 +18,8 @@ import com.walter.handyestimate.data.model.EstimateLineItem;
 import com.walter.handyestimate.data.model.EstimateTable;
 import com.walter.handyestimate.utils.FileHandlerUtils;
 import com.walter.handyestimate.utils.PrinterUtils;
+
+
 
 import java.io.File;
 import java.io.IOException;
@@ -105,11 +109,16 @@ public class LoginActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void print(Estimate estimate) throws Exception {
-        estimateFile = File.createTempFile("estimateFile", ".docx", this.getCacheDir());
-        FileHandlerUtils.writeEstimateToFile(estimate, estimateFile.getAbsolutePath());
-        FileHandlerUtils.convertDocxToPdf(estimateFile.getAbsolutePath());
-        File cachedEstimateFile = new File(this.getCacheDir(), "estimateFile.pdf");
-        PrinterUtils.printFile(cachedEstimateFile.getAbsolutePath());
-        cachedEstimateFile.deleteOnExit();
+        estimateFile = File.createTempFile("estimateFile", ".jpg", this.getCacheDir());
+        BufferedImage image = IMAGEIO.read(estimateFile);
+//        FileHandlerUtils.writeEstimateToFile(estimate, estimateFile.getAbsolutePath());
+//        PrinterUtils.printBitMap(FileHandlerUtils.convertFileToBitMap(estimateFile.getAbsolutePath()));
+//        estimateFile.deleteOnExit();
+//        FileWriter myWriter = new FileWriter(this.getCacheDir() + "filename");
+//        myWriter.write("Files in Java might be tricky, but it is fun enough!");
+//        myWriter.close();
+//        PrinterUtils.printFile(this.getCacheDir() + "filename");
+        Bitmap myBM = BitmapFactory.decodeFile(estimateFile.getAbsolutePath());
+
     }
 }

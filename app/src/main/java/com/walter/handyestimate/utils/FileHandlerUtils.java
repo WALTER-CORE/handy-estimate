@@ -1,6 +1,8 @@
 package com.walter.handyestimate.utils;
 
-import com.aspose.words.Document;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import com.walter.handyestimate.data.model.Estimate;
 import com.walter.handyestimate.data.model.EstimateLineItem;
 import com.walter.handyestimate.data.model.EstimateTable;
@@ -17,6 +19,7 @@ import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -74,11 +77,30 @@ public class FileHandlerUtils {
         }
     }
 
-    public static void convertDocxToPdf(String filePath) throws Exception {
-        // Load the Word document from disk
-        Document doc = new Document(filePath);
-        // Save as PDF
-        doc.save(filePath.replace(".docx", ".pdf"));
+//    public static void convertDocxToPdf(String filePath, String tempFile) throws Exception {
+//        InputStream in = new FileInputStream(filePath);
+//        XWPFDocument document = new XWPFDocument(in);
+//        // there must be a styles document, even if it is empty
+//        XWPFStyles styles = document.getStyles();
+//        // there must be section properties for the page having at least the page size set
+//        CTSectPr sectPr = document.getDocument().getBody().addNewSectPr();
+//        CTPageSz pageSz = sectPr.addNewPgSz();
+//        pageSz.setW(BigInteger.valueOf(12240)); //12240 Twips = 12240/20 = 612 pt = 612/72 = 8.5"
+//        pageSz.setH(BigInteger.valueOf(15840)); //15840 Twips = 15840/20 = 792 pt = 792/72 = 11"
+//
+//        //document must be written so underlaaying objects will be committed
+//        ByteArrayOutputStream out = new ByteArrayOutputStream();
+//        document.write(out);
+//        out.close();
+//        document.close();
+//
+//        PdfOptions options = PdfOptions.create();
+//        OutputStream pdfOut = new FileOutputStream(new File(filePath.replace(".docx", ".pdf")));
+//        PdfConverter.getInstance().convert(document, pdfOut, options);
+//    }
+
+    public static Bitmap convertFileToBitMap(String filePath) {
+        return BitmapFactory.decodeFile(filePath);
     }
 
     private static void writeEstimateHeading(XWPFDocument document) {
@@ -147,6 +169,11 @@ public class FileHandlerUtils {
 
     private static void writeEstimateTable(XWPFDocument document, EstimateTable estimateTable) {
         XWPFTable table = document.createTable();
+        table.getCTTbl().addNewTblGrid().addNewGridCol().setW(BigInteger.valueOf(2*1440));
+        //other columns (2 in this case) also each 2 inches width
+        for (int col = 1 ; col < 3; col++) {
+            table.getCTTbl().getTblGrid().addNewGridCol().setW(BigInteger.valueOf(2*1440));
+        }
         table.setWidth("100%");
 
         //Creating first Row with labels
