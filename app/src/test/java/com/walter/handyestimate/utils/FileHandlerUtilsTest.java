@@ -148,8 +148,9 @@ public class FileHandlerUtilsTest {
     @Ignore
     @Test
     public void testConvertDocxToBitmap() throws Exception {
-        String path = File.createTempFile("estimateTestWordFile", ".docx").getAbsolutePath();
-        path = "C:/Users/jongj/OneDrive/desktop/temp/estimateTestWordFile.docx";
+        String path = File.createTempFile("estimateFile", ".docx").getAbsolutePath();
+
+//        path = "C:/Users/jongj/OneDrive/desktop/temp/estimateTestWordFile.docx";
         String estimateDescription = "[ESTIMATE DESCRIPTION] Estimate for fence repair";
         String companyName = "[COMPANY NAME] Handy Company";
         String companyAddress = "[COMPANY ADDRESS] 1234 Sesame Street, Seattle WA 11111";
@@ -168,4 +169,5 @@ public class FileHandlerUtilsTest {
 
         assertNotNull(convertFileToBitMap(path));
     }
+
 }

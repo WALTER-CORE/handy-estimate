@@ -88,6 +88,10 @@ public class PrinterUtils {
         PrinterInfo settings = printer.getPrinterInfo();
         settings.printerModel = PrinterInfo.Model.PJ_763MFi;
         settings.paperSize = PrinterInfo.PaperSize.A4;
+        settings.orientation = PrinterInfo.Orientation.LANDSCAPE;
+        settings.valign = PrinterInfo.VAlign.MIDDLE;
+        settings.align = PrinterInfo.Align.CENTER;
+        settings.printMode = PrinterInfo.PrintMode.ORIGINAL;
 //        settings.port = PrinterInfo.Port.NET;
 //        settings.ipAddress = "";
 

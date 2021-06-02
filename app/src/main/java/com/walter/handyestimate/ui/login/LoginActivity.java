@@ -2,7 +2,6 @@ package com.walter.handyestimate.ui.login;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
@@ -18,8 +17,6 @@ import com.walter.handyestimate.data.model.EstimateLineItem;
 import com.walter.handyestimate.data.model.EstimateTable;
 import com.walter.handyestimate.utils.FileHandlerUtils;
 import com.walter.handyestimate.utils.PrinterUtils;
-
-
 
 import java.io.File;
 import java.io.IOException;
@@ -109,16 +106,40 @@ public class LoginActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void print(Estimate estimate) throws Exception {
-        estimateFile = File.createTempFile("estimateFile", ".jpg", this.getCacheDir());
-        BufferedImage image = IMAGEIO.read(estimateFile);
+
+        estimateFile = File.createTempFile("estimateFile", ".docx", this.getFilesDir());
+//        String path = estimateFile.getAbsolutePath();
 //        FileHandlerUtils.writeEstimateToFile(estimate, estimateFile.getAbsolutePath());
-//        PrinterUtils.printBitMap(FileHandlerUtils.convertFileToBitMap(estimateFile.getAbsolutePath()));
+
 //        estimateFile.deleteOnExit();
 //        FileWriter myWriter = new FileWriter(this.getCacheDir() + "filename");
 //        myWriter.write("Files in Java might be tricky, but it is fun enough!");
 //        myWriter.close();
 //        PrinterUtils.printFile(this.getCacheDir() + "filename");
-        Bitmap myBM = BitmapFactory.decodeFile(estimateFile.getAbsolutePath());
-
+//        Bitmap myBM = BitmapFactory.decodeFile(estimateFile.getAbsolutePath());
+        List<String> testWords = new ArrayList<>();
+        testWords.add("kimi");
+        testWords.add("kito");
+        testWords.add("yomeya");
+        Bitmap image = PrinterUtils.textAsBitmap(testWords, 11, 255);
+        PrinterUtils.printBitMap(image, estimateFile.getAbsolutePath());
+        //TODO : requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE}, 1);
     }
+
+//    public File writeFileOnInternalStorage(Context mcoContext, String sFileName, String sBody){
+//        File dir = new File(mcoContext.getFilesDir(), "mydir");
+//        if(!dir.exists()){
+//            dir.mkdir();
+//        }
+//
+//        try {
+//            File gpxfile = new File(dir, sFileName);
+//            FileWriter writer = new FileWriter(gpxfile);
+//            writer.append(sBody);
+//            writer.flush();
+//            writer.close();
+//        } catch (Exception e){
+//            e.printStackTrace();
+//        }
+//    }
 }

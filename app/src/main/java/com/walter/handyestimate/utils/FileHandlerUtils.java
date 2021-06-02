@@ -100,7 +100,20 @@ public class FileHandlerUtils {
 //    }
 
     public static Bitmap convertFileToBitMap(String filePath) {
-        return BitmapFactory.decodeFile(filePath);
+        BitmapFactory.Options options;
+        options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = false;
+        try {
+            return BitmapFactory.decodeFile(filePath);
+        } catch (OutOfMemoryError e) {
+            try {
+
+                options.inSampleSize = 2;
+                return BitmapFactory.decodeFile(filePath, options);
+            } catch (Exception exception) {
+                throw new RuntimeException("Options solution did not work");
+            }
+        }
     }
 
     private static void writeEstimateHeading(XWPFDocument document) {
