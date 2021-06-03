@@ -1,8 +1,6 @@
 package com.walter.handyestimate.ui.login;
 
 import android.annotation.SuppressLint;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
@@ -18,7 +16,7 @@ import com.walter.handyestimate.data.model.Estimate;
 import com.walter.handyestimate.data.model.EstimateLineItem;
 import com.walter.handyestimate.data.model.EstimateTable;
 import com.walter.handyestimate.utils.FileHandlerUtils;
-import com.walter.handyestimate.utils.PrinterUtils;
+import com.walter.handyestimate.utils.PDFFileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -111,9 +109,9 @@ public class LoginActivity extends AppCompatActivity {
     private void print(Estimate estimate) throws Exception {
 
         estimateFile = File.createTempFile("estimateFile", null, this.getFilesDir());
-        FileHandlerUtils.writeEstimateToFile(estimate, estimateFile.getAbsolutePath());
-        Bitmap myBM = BitmapFactory.decodeFile(estimateFile.getAbsolutePath());
-        PrinterUtils.printBitMap(myBM, estimateFile.getAbsolutePath());
+        PDFFileUtils.writeEstimateToPDF(estimate, estimateFile.getAbsolutePath());
+//        Bitmap myBM = BitmapFactory.decodeFile(estimateFile.getAbsolutePath());
+//        PrinterUtils.printBitMap(myBM, estimateFile.getAbsolutePath());
 //        String path = estimateFile.getAbsolutePath();
 //        FileHandlerUtils.writeEstimateToFile(estimate, estimateFile.getAbsolutePath());
 
