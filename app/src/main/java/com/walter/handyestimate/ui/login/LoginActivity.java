@@ -2,11 +2,13 @@ package com.walter.handyestimate.ui.login;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -83,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
             item = itemEditText.getText().toString();
             itemDescription = itemDescriptionEditText.getText().toString();
             lineItemList.add(new EstimateLineItem(item, lineQuantity, BigDecimal.ONE));
+            Toast.makeText(LoginActivity.this, "Item Added", Toast.LENGTH_LONG).show();
         });
 
         submitButton.setOnClickListener(view -> {
@@ -107,7 +110,10 @@ public class LoginActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void print(Estimate estimate) throws Exception {
 
-        estimateFile = File.createTempFile("estimateFile", ".docx", this.getFilesDir());
+        estimateFile = File.createTempFile("estimateFile", null, this.getFilesDir());
+        FileHandlerUtils.writeEstimateToFile(estimate, estimateFile.getAbsolutePath());
+        Bitmap myBM = BitmapFactory.decodeFile(estimateFile.getAbsolutePath());
+        PrinterUtils.printBitMap(myBM, estimateFile.getAbsolutePath());
 //        String path = estimateFile.getAbsolutePath();
 //        FileHandlerUtils.writeEstimateToFile(estimate, estimateFile.getAbsolutePath());
 
@@ -116,13 +122,13 @@ public class LoginActivity extends AppCompatActivity {
 //        myWriter.write("Files in Java might be tricky, but it is fun enough!");
 //        myWriter.close();
 //        PrinterUtils.printFile(this.getCacheDir() + "filename");
-//        Bitmap myBM = BitmapFactory.decodeFile(estimateFile.getAbsolutePath());
-        List<String> testWords = new ArrayList<>();
-        testWords.add("kimi");
-        testWords.add("kito");
-        testWords.add("yomeya");
-        Bitmap image = PrinterUtils.textAsBitmap(testWords, 11, 255);
-        PrinterUtils.printBitMap(image, estimateFile.getAbsolutePath());
+
+//        List<String> testWords = new ArrayList<>();
+//        testWords.add("kimi");
+//        testWords.add("kito");
+//        testWords.add("yomeya");
+//        Bitmap image = PrinterUtils.textAsBitmap(testWords, 11, 255);
+
         //TODO : requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE}, 1);
     }
 
