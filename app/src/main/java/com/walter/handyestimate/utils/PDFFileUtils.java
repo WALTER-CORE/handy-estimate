@@ -200,13 +200,13 @@ public class PDFFileUtils {
         for(int i = 0; i < lineItems.size(); i++){
             for(int j = 1 ; j <= 4; j++){ //1 to 3 to get different fields
                 String text;
-                if (i == 1) {
+                if (j == 1) {
                     //Description
                     text = lineItems.get(i).getDescription();
-                } else if (i == 2) {
+                } else if (j == 2) {
                     //Quantity
                     text = Integer.toString(lineItems.get(i).getQuantity());
-                } else if (i == 3) {
+                } else if (j == 3) {
                     //Rate
                     text = lineItems.get(i).getRate().toString();
                 } else {
