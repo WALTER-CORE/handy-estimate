@@ -5,14 +5,13 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.tom_roush.pdfbox.pdmodel.PDDocument;
+import com.tom_roush.pdfbox.pdmodel.PDPage;
+import com.tom_roush.pdfbox.pdmodel.PDPageContentStream;
+import com.tom_roush.pdfbox.pdmodel.font.PDType1Font;
 import com.walter.handyestimate.data.model.Estimate;
 import com.walter.handyestimate.data.model.EstimateLineItem;
 import com.walter.handyestimate.data.model.EstimateTable;
-
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -29,9 +28,9 @@ public class PDFFileUtils {
     private static int currentYOffset;
 
 
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static void writeEstimateToPDF(Estimate estimate, String filePath) throws IOException {
+
         FileOutputStream stream = new FileOutputStream(filePath); //need to make file in activity first to get filepathContentStreamWriter csw = new ContentStreamWriter(stream);
         PDDocument myPdf = new PDDocument();
         PDPage page = new PDPage();

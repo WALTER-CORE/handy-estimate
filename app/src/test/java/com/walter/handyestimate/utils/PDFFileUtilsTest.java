@@ -13,11 +13,12 @@ import java.util.Arrays;
 
 import static com.walter.handyestimate.utils.PDFFileUtils.writeEstimateToPDF;
 
+
 public class PDFFileUtilsTest extends TestCase {
 
     public void testWriteEstimateToPDF() throws IOException {
 
-        String path = "C:\\Users\\jongj\\OneDrive\\Desktop\\temp\\testPDF.pdf";
+        String path = "";
         File pdf = new File(path);
 
         String estimateDescription = "[ESTIMATE DESCRIPTION] Estimate for fence repair";
@@ -40,7 +41,7 @@ public class PDFFileUtilsTest extends TestCase {
     }
 
     public void testTableToPDF() throws IOException {
-        String path = "C:\\Users\\jongj\\OneDrive\\Desktop\\temp\\testTablePDF.pdf";
+        String path = "";
         File pdf = new File(path);
 
         String estimateDescription = "[ESTIMATE DESCRIPTION] Estimate for fence repair";

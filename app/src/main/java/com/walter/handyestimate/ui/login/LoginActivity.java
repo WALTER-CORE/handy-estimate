@@ -1,6 +1,7 @@
 package com.walter.handyestimate.ui.login;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
@@ -11,12 +12,14 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.tom_roush.pdfbox.util.PDFBoxResourceLoader;
 import com.walter.handyestimate.R;
 import com.walter.handyestimate.data.model.Estimate;
 import com.walter.handyestimate.data.model.EstimateLineItem;
 import com.walter.handyestimate.data.model.EstimateTable;
 import com.walter.handyestimate.utils.FileHandlerUtils;
 import com.walter.handyestimate.utils.PDFFileUtils;
+import com.walter.handyestimate.utils.PrinterUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -105,11 +108,18 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    public Context getContext() {
+        return getApplicationContext();
+    }
+
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void print(Estimate estimate) throws Exception {
-
-        estimateFile = File.createTempFile("estimateFile", null, this.getFilesDir());
+        PDFBoxResourceLoader.init(getApplicationContext());
+        estimateFile = File.createTempFile("estimateFile",".pdf" , this.getCacheDir());
         PDFFileUtils.writeEstimateToPDF(estimate, estimateFile.getAbsolutePath());
+        PrinterUtils.printPDF(estimateFile.getAbsolutePath());
+
 //        Bitmap myBM = BitmapFactory.decodeFile(estimateFile.getAbsolutePath());
 //        PrinterUtils.printBitMap(myBM, estimateFile.getAbsolutePath());
 //        String path = estimateFile.getAbsolutePath();
@@ -129,21 +139,4 @@ public class LoginActivity extends AppCompatActivity {
 
         //TODO : requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE}, 1);
     }
-
-//    public File writeFileOnInternalStorage(Context mcoContext, String sFileName, String sBody){
-//        File dir = new File(mcoContext.getFilesDir(), "mydir");
-//        if(!dir.exists()){
-//            dir.mkdir();
-//        }
-//
-//        try {
-//            File gpxfile = new File(dir, sFileName);
-//            FileWriter writer = new FileWriter(gpxfile);
-//            writer.append(sBody);
-//            writer.flush();
-//            writer.close();
-//        } catch (Exception e){
-//            e.printStackTrace();
-//        }
-//    }
 }

@@ -68,5 +68,5 @@ dependencies {
     implementation  'com.android.support:multidex:1.0.3'
     implementation  'com.fasterxml:aalto-xml:1.0.0'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
-    implementation 'org.apache.pdfbox:pdfbox:3.0.0-RC1'
+    implementation 'com.tom_roush:pdfbox-android:1.8.10.3'
 }

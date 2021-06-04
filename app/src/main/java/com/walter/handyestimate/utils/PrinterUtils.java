@@ -73,6 +73,52 @@ public class PrinterUtils {
         }).start();
     }
 
+    public static void printPDF(String filePath) {
+        Printer printer = new Printer();
+        PrinterInfo settings = printer.getPrinterInfo();
+        settings.printerModel = PrinterInfo.Model.PJ_763MFi;
+        settings.paperSize = PrinterInfo.PaperSize.A4;
+        settings.orientation = PrinterInfo.Orientation.LANDSCAPE;
+        settings.valign = PrinterInfo.VAlign.MIDDLE;
+        settings.align = PrinterInfo.Align.CENTER;
+        settings.printMode = PrinterInfo.PrintMode.ORIGINAL;
+
+//        settings.port = PrinterInfo.Port.NET;
+//        settings.ipAddress = "";
+
+        // Print Settings
+        settings.numberOfCopies = 1;
+        settings.labelNameIndex = PrinterInfo.Model.PJ_763MFi.getDefaultPaper();
+        settings.workPath = filePath;
+
+        // For Bluetooth:
+        printer.setBluetooth(BluetoothAdapter.getDefaultAdapter());
+        settings.port = PrinterInfo.Port.BLUETOOTH;
+        settings.macAddress = "60:77:71:BE:C4:8F"; //netPrinters.get(0).macAddress;
+        // // TODO: DON'T COMMIT THIS ADDRESS
+
+//
+//        // For USB:
+//        settings.port = PrinterInfo.Port.USB;
+
+        printer.setPrinterInfo(settings);
+
+        // Connect, then print
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (printer.startCommunication()) {
+                    PrinterStatus result = printer.printPDF(filePath, 1);
+                    if (result.errorCode != PrinterInfo.ErrorCode.ERROR_NONE) {
+                        logger.severe("Error when printing PDF"
+                                + "\nPRINTER ERROR CODE: " + result.errorCode);
+                    }
+                    printer.endCommunication();
+                }
+            }
+        }).start();
+    }
+
     /**
      * Print the given bitmap image to the Brother Printer
      *
