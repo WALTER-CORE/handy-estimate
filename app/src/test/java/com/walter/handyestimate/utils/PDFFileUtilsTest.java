@@ -6,6 +6,8 @@ import com.walter.handyestimate.data.model.EstimateTable;
 
 import junit.framework.TestCase;
 
+import org.junit.rules.TemporaryFolder;
+
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -16,9 +18,11 @@ import static com.walter.handyestimate.utils.PDFFileUtils.writeEstimateToPDF;
 
 public class PDFFileUtilsTest extends TestCase {
 
+    public TemporaryFolder folder = new TemporaryFolder();
+
     public void testWriteEstimateToPDF() throws IOException {
 
-        String path = "";
+        String path = folder.newFile("estimatePDF.pdf").getAbsolutePath();
         File pdf = new File(path);
 
         String estimateDescription = "[ESTIMATE DESCRIPTION] Estimate for fence repair";
