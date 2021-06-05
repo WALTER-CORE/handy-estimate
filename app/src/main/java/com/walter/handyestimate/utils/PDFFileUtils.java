@@ -175,8 +175,6 @@ public class PDFFileUtils {
             nextx += colWidth;
         }
 
-
-
         float textx = margin+cellMargin;
         float texty = yPosition-15;
 
@@ -207,10 +205,10 @@ public class PDFFileUtils {
                     text = Integer.toString(lineItems.get(i).getQuantity());
                 } else if (j == 3) {
                     //Rate
-                    text = lineItems.get(i).getRate().toString();
+                    text = "$ " + lineItems.get(i).getRate().toString();
                 } else {
                     //Cost
-                    text = lineItems.get(i).getCost().toString();
+                    text = "$ " + lineItems.get(i).getCost().toString();
                 }
 
                 contentStream.beginText();

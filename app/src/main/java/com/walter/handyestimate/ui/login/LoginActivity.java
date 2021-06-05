@@ -95,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
             customerName = customerNameEditText.getText().toString();
             customerAddress = customerAddressEditText.getText().toString();
             estimateDescription = estimateDescriptionEditText.getText().toString();
+            Toast.makeText(LoginActivity.this, "Printing...", Toast.LENGTH_LONG).show();
 
             //TODO: Construct new EstimateTable and use strings received to create the Estimate item.
             estimate = new Estimate(estimateDescription, companyName, companyAddress, customerName, customerAddress, new EstimateTable(lineItemList));
@@ -118,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
         PDFBoxResourceLoader.init(getApplicationContext());
         estimateFile = File.createTempFile("estimateFile",".pdf" , this.getCacheDir());
         PDFFileUtils.writeEstimateToPDF(estimate, estimateFile.getAbsolutePath());
-        PrinterUtils.printPDF(estimateFile.getAbsolutePath());
+        PrinterUtils.printPDF(estimateFile.getAbsolutePath(), getApplicationContext());
 
 //        Bitmap myBM = BitmapFactory.decodeFile(estimateFile.getAbsolutePath());
 //        PrinterUtils.printBitMap(myBM, estimateFile.getAbsolutePath());

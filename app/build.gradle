@@ -4,7 +4,7 @@ plugins {
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    buildToolsVersion '27.0.3'
 
     lintOptions {
         abortOnError false
@@ -21,6 +21,7 @@ android {
     defaultConfig {
         applicationId "com.walter.handyestimate"
         minSdkVersion 26
+        //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"

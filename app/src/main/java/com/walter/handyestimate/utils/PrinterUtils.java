@@ -2,6 +2,7 @@ package com.walter.handyestimate.utils;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -73,15 +74,14 @@ public class PrinterUtils {
         }).start();
     }
 
-    public static void printPDF(String filePath) {
+    public static void printPDF(String filePath, Context context) {
         Printer printer = new Printer();
         PrinterInfo settings = printer.getPrinterInfo();
         settings.printerModel = PrinterInfo.Model.PJ_763MFi;
         settings.paperSize = PrinterInfo.PaperSize.A4;
-        settings.orientation = PrinterInfo.Orientation.LANDSCAPE;
-        settings.valign = PrinterInfo.VAlign.MIDDLE;
-        settings.align = PrinterInfo.Align.CENTER;
-        settings.printMode = PrinterInfo.PrintMode.ORIGINAL;
+        settings.printMode = PrinterInfo.PrintMode.FIT_TO_PAPER;
+        settings.pjPaperKind = PrinterInfo.PjPaperKind.PJ_CUT_PAPER;
+
 
 //        settings.port = PrinterInfo.Port.NET;
 //        settings.ipAddress = "";
@@ -89,7 +89,7 @@ public class PrinterUtils {
         // Print Settings
         settings.numberOfCopies = 1;
         settings.labelNameIndex = PrinterInfo.Model.PJ_763MFi.getDefaultPaper();
-        settings.workPath = filePath;
+        settings.workPath = context.getFilesDir().getAbsolutePath() + "/";
 
         // For Bluetooth:
         printer.setBluetooth(BluetoothAdapter.getDefaultAdapter());
@@ -108,7 +108,7 @@ public class PrinterUtils {
             @Override
             public void run() {
                 if (printer.startCommunication()) {
-                    PrinterStatus result = printer.printPDF(filePath, 1);
+                    PrinterStatus result = printer.printPdfFile(filePath, 1);
                     if (result.errorCode != PrinterInfo.ErrorCode.ERROR_NONE) {
                         logger.severe("Error when printing PDF"
                                 + "\nPRINTER ERROR CODE: " + result.errorCode);
