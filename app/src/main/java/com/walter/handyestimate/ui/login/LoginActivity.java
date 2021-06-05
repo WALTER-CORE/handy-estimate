@@ -1,7 +1,6 @@
 package com.walter.handyestimate.ui.login;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
@@ -17,7 +16,6 @@ import com.walter.handyestimate.R;
 import com.walter.handyestimate.data.model.Estimate;
 import com.walter.handyestimate.data.model.EstimateLineItem;
 import com.walter.handyestimate.data.model.EstimateTable;
-import com.walter.handyestimate.utils.FileHandlerUtils;
 import com.walter.handyestimate.utils.PDFFileUtils;
 import com.walter.handyestimate.utils.PrinterUtils;
 
@@ -41,10 +39,8 @@ public class LoginActivity extends AppCompatActivity {
     private String rate;
 
     private File estimateFile;
-    private FileHandlerUtils fileHandler;
 
     private Estimate estimate;
-    private EstimateTable estimateTable;
     private List<EstimateLineItem> lineItemList;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -114,35 +110,13 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public Context getContext() {
-        return getApplicationContext();
-    }
-
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void print(Estimate estimate) throws Exception {
+
         PDFBoxResourceLoader.init(getApplicationContext());
         estimateFile = File.createTempFile("estimateFile",".pdf" , this.getCacheDir());
         PDFFileUtils.writeEstimateToPDF(estimate, estimateFile.getAbsolutePath());
         PrinterUtils.printPDF(estimateFile.getAbsolutePath(), getApplicationContext());
 
-//        Bitmap myBM = BitmapFactory.decodeFile(estimateFile.getAbsolutePath());
-//        PrinterUtils.printBitMap(myBM, estimateFile.getAbsolutePath());
-//        String path = estimateFile.getAbsolutePath();
-//        FileHandlerUtils.writeEstimateToFile(estimate, estimateFile.getAbsolutePath());
-
-//        estimateFile.deleteOnExit();
-//        FileWriter myWriter = new FileWriter(this.getCacheDir() + "filename");
-//        myWriter.write("Files in Java might be tricky, but it is fun enough!");
-//        myWriter.close();
-//        PrinterUtils.printFile(this.getCacheDir() + "filename");
-
-//        List<String> testWords = new ArrayList<>();
-//        testWords.add("kimi");
-//        testWords.add("kito");
-//        testWords.add("yomeya");
-//        Bitmap image = PrinterUtils.textAsBitmap(testWords, 11, 255);
-
-        //TODO : requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE}, 1);
     }
 }
