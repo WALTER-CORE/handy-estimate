@@ -3,19 +3,20 @@ package com.walter.handyestimate.ui.login;
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-
+import com.tom_roush.pdfbox.util.PDFBoxResourceLoader;
 import com.walter.handyestimate.R;
 import com.walter.handyestimate.data.model.Estimate;
-import com.walter.handyestimate.data.model.EstimateTable;
 import com.walter.handyestimate.data.model.EstimateLineItem;
-import com.walter.handyestimate.utils.FileHandlerUtils;
+import com.walter.handyestimate.data.model.EstimateTable;
+import com.walter.handyestimate.utils.PDFFileUtils;
 import com.walter.handyestimate.utils.PrinterUtils;
 
 import java.io.File;
@@ -23,8 +24,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.io.File.createTempFile;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -37,12 +36,11 @@ public class LoginActivity extends AppCompatActivity {
     private String estimateDescription;
     private String item;
     private String itemDescription;
+    private String rate;
 
     private File estimateFile;
-    private FileHandlerUtils fileHandler;
 
     private Estimate estimate;
-    private EstimateTable estimateTable;
     private List<EstimateLineItem> lineItemList;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -60,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText estimateDescriptionEditText = findViewById(R.id.estimate_description);
         final EditText itemEditText = findViewById(R.id.item);
         final EditText itemDescriptionEditText = findViewById(R.id.item_description);
+        final EditText rateEditText = findViewById(R.id.rate);
 
         final Button submitButton = findViewById(R.id.submit);
         final Button plusQuantityButton = findViewById(R.id.plus_quantity);
@@ -84,7 +83,10 @@ public class LoginActivity extends AppCompatActivity {
         addItemButton.setOnClickListener(view -> {
             item = itemEditText.getText().toString();
             itemDescription = itemDescriptionEditText.getText().toString();
-            lineItemList.add(new EstimateLineItem(item, lineQuantity, BigDecimal.ONE));
+            rate = rateEditText.getText().toString();
+            BigDecimal rateBD = new BigDecimal(rate);
+            lineItemList.add(new EstimateLineItem(item, lineQuantity, rateBD));
+            Toast.makeText(LoginActivity.this, "Item Added", Toast.LENGTH_LONG).show();
         });
 
         submitButton.setOnClickListener(view -> {
@@ -94,20 +96,27 @@ public class LoginActivity extends AppCompatActivity {
             customerAddress = customerAddressEditText.getText().toString();
             estimateDescription = estimateDescriptionEditText.getText().toString();
 
+            Toast.makeText(LoginActivity.this, "Printing...", Toast.LENGTH_LONG).show();
+
             //TODO: Construct new EstimateTable and use strings received to create the Estimate item.
             estimate = new Estimate(estimateDescription, companyName, companyAddress, customerName, customerAddress, new EstimateTable(lineItemList));
             try {
                 print(estimate);
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void print(Estimate estimate) throws IOException {
-        estimateFile = createTempFile("estimateFile", ".doc", this.getCacheDir());
-        FileHandlerUtils.writeEstimateToFile(estimate, estimateFile.getAbsolutePath());
-        PrinterUtils.printFile(estimateFile.getAbsolutePath());
+    private void print(Estimate estimate) throws Exception {
+
+        PDFBoxResourceLoader.init(getApplicationContext());
+        estimateFile = File.createTempFile("estimateFile",".pdf" , this.getCacheDir());
+        PDFFileUtils.writeEstimateToPDF(estimate, estimateFile.getAbsolutePath());
+        PrinterUtils.printPDF(estimateFile.getAbsolutePath(), getApplicationContext());
+
     }
 }
