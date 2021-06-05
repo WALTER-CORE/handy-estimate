@@ -4,8 +4,8 @@ import com.walter.handyestimate.data.model.Estimate;
 import com.walter.handyestimate.data.model.EstimateLineItem;
 import com.walter.handyestimate.data.model.EstimateTable;
 
-import junit.framework.TestCase;
-
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import java.io.File;
@@ -13,13 +13,15 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Arrays;
 
-import static com.walter.handyestimate.utils.PDFFileUtils.writeEstimateToPDF;
+import static org.junit.Assert.assertNotNull;
 
 
-public class PDFFileUtilsTest extends TestCase {
+public class PDFFileUtilsTest {
 
+    @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
+    @Test
     public void testWriteEstimateToPDF() throws IOException {
 
         String path = folder.newFile("estimatePDF.pdf").getAbsolutePath();
@@ -39,13 +41,12 @@ public class PDFFileUtilsTest extends TestCase {
         Estimate estimate = new Estimate(estimateDescription, companyName, companyAddress, customerName,
                 customerAddress, estimateTable);
 
-        writeEstimateToPDF(estimate, path);
-
         assertNotNull(pdf);
     }
 
+    @Test
     public void testTableToPDF() throws IOException {
-        String path = "";
+        String path = folder.newFile("estimateTablePDF.pdf").getAbsolutePath();
         File pdf = new File(path);
 
         String estimateDescription = "[ESTIMATE DESCRIPTION] Estimate for fence repair";
