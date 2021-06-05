@@ -234,7 +234,7 @@ public class PDFFileUtils {
         contentStream.setFont(PDType1Font.HELVETICA_BOLD,14);
         contentStream.beginText();
         contentStream.newLineAtOffset(430, texty - 50);
-        contentStream.showText("Total Cost : " + estimateTable.getTotalCost());
+        contentStream.showText("Total Cost : $ " + estimateTable.getTotalCost());
         contentStream.endText();
     }
 

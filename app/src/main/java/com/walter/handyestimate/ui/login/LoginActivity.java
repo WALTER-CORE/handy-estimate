@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     private String estimateDescription;
     private String item;
     private String itemDescription;
+    private String rate;
 
     private File estimateFile;
     private FileHandlerUtils fileHandler;
@@ -61,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText estimateDescriptionEditText = findViewById(R.id.estimate_description);
         final EditText itemEditText = findViewById(R.id.item);
         final EditText itemDescriptionEditText = findViewById(R.id.item_description);
+        final EditText rateEditText = findViewById(R.id.rate);
 
         final Button submitButton = findViewById(R.id.submit);
         final Button plusQuantityButton = findViewById(R.id.plus_quantity);
@@ -85,7 +87,9 @@ public class LoginActivity extends AppCompatActivity {
         addItemButton.setOnClickListener(view -> {
             item = itemEditText.getText().toString();
             itemDescription = itemDescriptionEditText.getText().toString();
-            lineItemList.add(new EstimateLineItem(item, lineQuantity, BigDecimal.ONE));
+            rate = rateEditText.getText().toString();
+            BigDecimal rateBD = new BigDecimal(rate);
+            lineItemList.add(new EstimateLineItem(item, lineQuantity, rateBD));
             Toast.makeText(LoginActivity.this, "Item Added", Toast.LENGTH_LONG).show();
         });
 
@@ -95,6 +99,7 @@ public class LoginActivity extends AppCompatActivity {
             customerName = customerNameEditText.getText().toString();
             customerAddress = customerAddressEditText.getText().toString();
             estimateDescription = estimateDescriptionEditText.getText().toString();
+
             Toast.makeText(LoginActivity.this, "Printing...", Toast.LENGTH_LONG).show();
 
             //TODO: Construct new EstimateTable and use strings received to create the Estimate item.

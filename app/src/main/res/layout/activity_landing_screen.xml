@@ -18,8 +18,8 @@
 
     <Button
         android:id="@+id/startbutton"
-        android:layout_width="109dp"
-        android:layout_height="74dp"
+        android:layout_width="146dp"
+        android:layout_height="73dp"
         android:text="start!"
         android:textSize="20sp"
         app:backgroundTint="#D88204"
